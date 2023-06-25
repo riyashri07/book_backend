@@ -1,7 +1,6 @@
-const app_middleware = require("../middleware/app_middleware");
 const bookModel = require("../models/bookModels");
 
-const getAllbooks = app_middleware(async (req, res, next) => {
+const getAllbooks = async (req, res) => {
     const { q, page, limit } = req.query;
 
     let filterObj = {};
@@ -25,9 +24,9 @@ const getAllbooks = app_middleware(async (req, res, next) => {
     const bookCount = await bookModel.countDocuments();
 
     res.status(201).json({ success: true, books, bookCount });
-});
+};
 
-const getBookDetails = app_middleware(async (req, res, next) => {
+const getBookDetails = async (req, res) => {
     const book = await bookModel.findById(req.params.id);
 
     if (!book) {
@@ -41,7 +40,7 @@ const getBookDetails = app_middleware(async (req, res, next) => {
         success: true,
         book,
     });
-});
+};
 
 module.exports = {
     getAllbooks,
